@@ -9,5 +9,6 @@
   },
   "tailwindCSS.emmetCompletions": true,
   "tailwindCSS.colorDecorators": true,
-  "tailwindCSS.hovers": true
+  "tailwindCSS.hovers": true,
+  "todo-tree.regex.enableMultiLine": true
 }
