@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import { sleep } from '../helpers/util';
 
 type Poster = {
   url: string;
@@ -34,8 +35,8 @@ export default function VideoPosterCropper() {
         canvas.height = video.videoHeight;
         for (let time of times) {
           video.currentTime = time;
-          // video.pause();
-          await sleep(time * 10);
+          video.pause();
+          await sleep(time * 1e2);
           ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
           const posterUrl = canvas.toDataURL();
           srcSet.push({ url: posterUrl, time: time });
@@ -51,7 +52,7 @@ export default function VideoPosterCropper() {
     <div className="p-4">
       <input type="file" accept="video/*" className="p-2" onChange={handleVideoChange} />
       <br />
-      <video ref={videoRef} controls onLoadedData={capturePoster} />
+      <video preload="true" ref={videoRef} controls onLoadedData={capturePoster} />
       <br />
       {posters.map(poster => (
         <div key={poster.time} className="relative">
@@ -66,11 +67,4 @@ export default function VideoPosterCropper() {
 // FIXME
 // 1. 重复渲染的问题
 // 2. 视频没加载完成，导致截取的图片是刚开始的第一帧
-
-async function sleep(time: number) {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve(time);
-    }, time);
-  });
-}
+// 3. 定时器延迟方案 预算的时间不准确，能否通过 video api 获取到准确的加载进度

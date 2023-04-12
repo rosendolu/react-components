@@ -1,14 +1,11 @@
 import { useRef, useState } from 'react';
+import { sleep } from '../helpers/util';
 
 export default function VideoPosterCacher() {
   const [list, setList] = useState<string[]>([]);
-  const uploadRef = useRef() as any;
-  const [src, setSrc] = useState('');
+  const videoRef = useRef() as any;
 
-  const capturePoster = () => {
-    if (!uploadRef.current.files.length) {
-      alert('Please Upload Video First!');
-    }
+  async function capturePoster() {
     // const canvas = document.createElement('canvas');
     const video = document.getElementById('video') as any;
 
@@ -20,77 +17,46 @@ export default function VideoPosterCacher() {
     const ctx = canvas.getContext('2d') as any;
 
     const posters: string[] = [];
-    // Capture the first poster at 0 seconds
-    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-    posters.push(canvas.toDataURL('image/png'));
+    const duration = video.duration;
 
-    // Capture the second poster at 50% of the video's duration
-    const halfwayTime = video.duration / 2;
-    video.currentTime = halfwayTime;
-    video.pause();
-    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-    posters.push(canvas.toDataURL('image/png'));
-
-    // Capture the third poster at 90% of the video's duration
-    const ninetyPercentTime = video.duration * 0.9;
-    video.currentTime = ninetyPercentTime;
-    video.pause();
-    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-    posters.push(canvas.toDataURL('image/png'));
+    for (let i = 1; i <= duration; i++) {
+      video.currentTime = i;
+      video.pause();
+      await sleep(3e3);
+      // Capture the first poster at 0 seconds
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      posters.push(canvas.toDataURL('image/png'));
+    }
     setList(posters);
-  };
+  }
 
-  const afterUpload = () => {
-    setSrc(URL.createObjectURL(uploadRef.current.files[0]));
-    // capturePoster();
+  const afterUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files.length > 0) {
+      const file = event.target.files[0];
+      const videoUrl = URL.createObjectURL(file);
+      if (videoRef.current) {
+        videoRef.current.src = videoUrl;
+        videoRef.current.play();
+      }
+    }
   };
+  console.log('rerender');
 
   return (
     <div>
       <div>
         <h2>Upload Video</h2>
-        <input
-          type="file"
-          accept="video/*"
-          style={{
-            width: '500px',
-            height: '20px',
-            border: '1px solid blue',
-          }}
-          onChange={afterUpload}
-          placeholder="Click to upload your video!"
-          ref={uploadRef}
-        />
+        <input type="file" accept="video/*" onChange={afterUpload} placeholder="Click to upload your video!" />
       </div>
-      {src && (
-        <>
-          <h2>上传的视频文件</h2>
-          <video
-            id="video"
-            key={src}
-            // onCanPlay={capturePoster}
-            controls
-            src={src}
-            style={{ width: '250px', height: '250px' }}
-          />
-        </>
-      )}
+      <h2>上传的视频文件</h2>
+      <video ref={videoRef} id="video" onLoadedData={capturePoster} controls className="outline-1 outline-gray-600" />
       <br />
       {/* <button onClick={capturePoster}>截取封面</button> */}
-      <h2>截取的视频封面图片</h2>
-      <canvas id="canvas" style={{ outline: '1px solid red' }}></canvas>
+      <h2>canvas 画布</h2>
+      <canvas id="canvas" className="border border-cyan-200"></canvas>
+      <h2>视频封面图片</h2>
       {list.map((src, i) => (
-        <img
-          src={src}
-          key={i}
-          style={{
-            margin: '10px',
-            outline: '1px solid blue',
-            width: '100px',
-            height: '100px',
-            background: 'gray',
-          }}
-        />
+        <img src={src} key={i} />
       ))}
     </div>
   );

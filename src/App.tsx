@@ -18,7 +18,7 @@ function App() {
   ];
   return (
     <div>
-      <header className="fixed left-0 right-0 top-0 flex h-16 items-center justify-center bg-emerald-100">
+      <header className="fixed left-0 right-0 top-0 z-10 flex h-16 items-center justify-center bg-emerald-100">
         {features.map(item => (
           <div key={item.path} className="p-2">
             <a href={item.path}>{item.title}</a>
