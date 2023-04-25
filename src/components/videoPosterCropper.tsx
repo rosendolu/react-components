@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { SyntheticEvent, useRef, useState } from 'react';
 import { sleep } from '../helpers/util';
 
 type Poster = {
@@ -21,7 +21,7 @@ export default function VideoPosterCropper() {
     }
   };
 
-  async function capturePoster() {
+  async function capturePoster(useSleep = false) {
     const video = videoRef.current;
     console.log('capture poster ', video?.videoWidth, video?.videoHeight, video?.duration);
     if (video) {
@@ -36,23 +36,49 @@ export default function VideoPosterCropper() {
         for (let time of times) {
           video.currentTime = time;
           video.pause();
-          await sleep(time * 1e2);
+          if (useSleep) {
+            await sleep(time * 1e2);
+          }
           ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
           const posterUrl = canvas.toDataURL();
           srcSet.push({ url: posterUrl, time: time });
         }
       }
       setPosters(srcSet);
+      console.log('srcSet', srcSet);
     }
   }
 
   console.log('render');
+  function calculateProgress() {
+    const video = videoRef.current as HTMLVideoElement;
+    const buffered = video.buffered;
+    const total = video.duration;
+    let loaded = 0;
+    for (let i = 0; i < buffered.length; i++) {
+      loaded += buffered.end(i) - buffered.start(i);
+    }
+    const percent = (loaded / total) * 100;
+    console.log('Current loading progress: ' + percent + '%');
+  }
+  function progressChange(event: SyntheticEvent<HTMLVideoElement, Event>): void {
+    console.log('progressChange');
+    calculateProgress();
+    capturePoster();
+  }
+  function timeUpdated(event: SyntheticEvent<HTMLVideoElement, Event>): void {
+    console.log('timeUpdated');
+    calculateProgress();
+    // capturePoster();
+  }
 
   return (
     <div className="p-4">
       <input type="file" accept="video/*" className="p-2" onChange={handleVideoChange} />
       <br />
-      <video preload="true" ref={videoRef} controls onLoadedData={capturePoster} />
+      {/* <video preload="true" ref={videoRef} controls  onLoadedData={() => capturePoster(true)} /> */}
+      {/* <video preload="true" ref={videoRef} controls onProgress={progressChange} /> */}
+      <video preload="true" ref={videoRef} controls onTimeUpdate={timeUpdated} />
       <br />
       {posters.map(poster => (
         <div key={poster.time} className="relative">

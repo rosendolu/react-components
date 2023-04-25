@@ -40,7 +40,7 @@ export default function VideoPosterCacher() {
       }
     }
   };
-  console.log('rerender');
+  // console.log('rerender');
 
   return (
     <div>
