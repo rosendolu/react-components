@@ -15,6 +15,10 @@ function App() {
       title: 'VideoPosterCatcher',
       path: 'videopostercacher',
     },
+    {
+      title: 'canvas',
+      path: 'canvas',
+    },
   ];
   return (
     <div>
