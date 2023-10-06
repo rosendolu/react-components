@@ -6,8 +6,8 @@ function CanvasElement(props) {
   const [element, setElement] = useState({
     x: 0,
     y: 0,
-    width: 100,
-    height: 100,
+    width: 50,
+    height: 50,
     rotation: 0,
     scale: 1,
   });
@@ -75,7 +75,7 @@ function CanvasElement(props) {
 export default function Example() {
   return (
     <div className="bg-blue-400">
-      <CanvasElement width={100} height={100}></CanvasElement>
+      <CanvasElement width={600} height={600}></CanvasElement>
     </div>
   );
 }
