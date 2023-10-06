@@ -16,6 +16,10 @@ function App() {
       path: 'videopostercacher',
     },
     {
+      title: 'video-cropper-canvas',
+      path: 'video-cropper',
+    },
+    {
       title: 'canvas',
       path: 'canvas',
     },
