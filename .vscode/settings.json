@@ -10,5 +10,6 @@
   "tailwindCSS.emmetCompletions": true,
   "tailwindCSS.colorDecorators": true,
   "tailwindCSS.hovers": true,
-  "todo-tree.regex.enableMultiLine": true
+  "todo-tree.regex.enableMultiLine": true,
+  "cSpell.words": ["ffprobe", "Konva", "webm"]
 }

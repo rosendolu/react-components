@@ -9,4 +9,14 @@ export default defineConfig({
       '@assets': './src/assets',
     },
   },
+  optimizeDeps: {
+    exclude: ['@ffmpeg/ffmpeg', '@ffmpeg/util'],
+  },
+  server: {
+    headers: {
+      'Cross-Origin-Opener-Policy': 'same-origin',
+      'Cross-Origin-Embedder-Policy': 'require-corp',
+      // 'Cross-Origin-Embedder-Policy': 'credentialless',
+    },
+  },
 });
