@@ -2,6 +2,7 @@ import { FFmpeg } from '@ffmpeg/ffmpeg';
 import { fetchFile, toBlobURL } from '@ffmpeg/util';
 import { Button, Divider, Form, InputNumber, List, Select, Space } from 'antd';
 import dayjs from 'dayjs';
+import log from 'loglevel';
 import { useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useEffectOnce } from 'usehooks-ts';
@@ -103,6 +104,7 @@ export default function FFmpegComponent() {
     const fileName = form.getFieldValue('selectedFile');
     const ffmpeg = ffmpegRef.current;
     const data = await ffmpeg.readFile(fileName);
+    log.debug('# readFile ', data);
     // @ts-ignore
     videoRef.current.src = URL.createObjectURL(new Blob([data.buffer], { type: 'video/mp4' }));
     return;
@@ -182,6 +184,17 @@ export default function FFmpegComponent() {
   async function selectFrames() {
     const file = localPath(form.getFieldValue('selectedFile'));
     const command = `-i ${file} -v error -y -vframes 1000 -vf scale=300:100 output_frame%02d.png`;
+    await execCommands(command);
+  }
+
+  async function extract(ext): Promise<void> {
+    const file = localPath(form.getFieldValue('selectedFile'));
+    let command: any = [];
+    if (ext == '.aac') {
+      command = `-i ${file} -v error -y -vn -acodec copy output.aac`;
+    } else if (ext == '.h264') {
+      command = `-i ${file} -v error -vcodec copy -an output_1.h264`;
+    }
     await execCommands(command);
   }
 
@@ -269,6 +282,12 @@ export default function FFmpegComponent() {
           <Button onClick={() => fpsScaleImage()}>fps+scale</Button>
           <Button onClick={() => selectImage()}>select</Button>
           <Button onClick={() => selectFrames()}>vframes</Button>
+        </Space>
+
+        <Divider>Extract</Divider>
+        <Space>
+          <Button onClick={() => extract('.aac')}>audio</Button>
+          <Button onClick={() => extract('.h264')}>h264</Button>
         </Space>
       </Form>
     </div>
