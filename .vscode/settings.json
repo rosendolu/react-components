@@ -1,15 +1,15 @@
 {
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.formatOnSave": true,
-  "files.associations": {
-    "*.css": "tailwindcss"
-  },
-  "editor.quickSuggestions": {
-    "strings": true
-  },
-  "tailwindCSS.emmetCompletions": true,
-  "tailwindCSS.colorDecorators": true,
-  "tailwindCSS.hovers": true,
-  "todo-tree.regex.enableMultiLine": true,
-  "cSpell.words": ["ffprobe", "Konva", "webm"]
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "files.associations": {
+        "*.css": "tailwindcss"
+    },
+    "editor.quickSuggestions": {
+        "strings": true
+    },
+    "tailwindCSS.emmetCompletions": true,
+    "tailwindCSS.colorDecorators": true,
+    "tailwindCSS.hovers": true,
+    "todo-tree.regex.enableMultiLine": true,
+    "cSpell.words": ["ffprobe", "Konva", "Snabbdom", "webm"]
 }
