@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { createHashRouter } from 'react-router-dom';
 import App from '../App';
 import VideoPosterCapture from '../components/VideoPosterCapture';
 import Canvas from '../components/canvas';
@@ -99,4 +99,4 @@ export const routerConfig = [
         ],
     },
 ];
-export const router = createBrowserRouter(routerConfig);
+export const router = createHashRouter(routerConfig);
