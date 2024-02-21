@@ -25,3 +25,4 @@ dist-ssr
 debug/**
 *.zip
 public/output*
+tsconfig.tsbuildinfo
