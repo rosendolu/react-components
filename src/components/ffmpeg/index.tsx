@@ -1,17 +1,18 @@
 import { FFmpeg } from '@ffmpeg/ffmpeg';
 import { fetchFile, toBlobURL } from '@ffmpeg/util';
 import { Button, Divider, Form, InputNumber, List, Select, Space } from 'antd';
-import dayjs from 'dayjs';
 import log from 'loglevel';
 import { useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useEffectOnce } from 'usehooks-ts';
+import { execCommands } from './tools';
 
 export default function FFmpegComponent() {
     const [loaded, setLoaded] = useState(false);
     const ffmpegRef = useRef(new FFmpeg());
     const videoRef: any = useRef(null);
-
+    // @ts-ignore
+    const runCommands = str => execCommands(ffmpegRef.current, str);
     useEffectOnce(() => {
         document.title = 'ffmpeg';
         const ffmpeg = ffmpegRef.current;
@@ -29,26 +30,7 @@ export default function FFmpegComponent() {
             ffmpeg.off('progress', progressLog);
         };
     });
-    async function execCommands(str) {
-        {
-            const startTime = dayjs();
 
-            const ffmpeg = ffmpegRef.current;
-            try {
-                const commands = str.split(' ');
-                const res = await ffmpeg.exec(commands);
-                const duration = dayjs.duration(dayjs().diff(startTime));
-                console.log('## execCommands', commands, res, '耗时：', duration.format('HH:mm:ss'));
-                if (res) {
-                    console.error('## execCommands err ', res);
-                } else {
-                    toast.success('execCommands success');
-                }
-            } catch (err) {
-                console.error('## execCommands err ', err);
-            }
-        }
-    }
     const load = async () => {
         const ffmpegVersion = form.getFieldValue('ffmpegVersion');
         let baseURL = '';
@@ -83,12 +65,14 @@ export default function FFmpegComponent() {
     async function convertVideoFormat(cur) {
         const prev = localPath(`output.${form.getFieldValue('videoType')}`);
         const commands = `-i ${prev} ${cur}`;
-        await execCommands(commands);
+        await runCommands(commands);
     }
 
     async function downloadFile() {
-        const mp4 = `https://cdn.nnkosmos.com/test/video/11198/outputa.mp4`;
-        const webm = `https://cdn.nnkosmos.com/test/avatar/4212/30s.webm`;
+        // const mp4 = `https://cdn.nnkosmos.com/test/video/11198/outputa.mp4`;
+        const mp4 = `/1.mp4`;
+        // const webm = `https://cdn.nnkosmos.com/test/avatar/4212/30s.webm`;
+        const webm = `/output_320.webm`;
         // const webm = `http://localhost:5173/output.webm`;
         const ffmpeg = ffmpegRef.current;
 
@@ -133,22 +117,22 @@ export default function FFmpegComponent() {
     async function videoToImage() {
         const fileName = form.getFieldValue('selectedFile');
         const command = `-i ${fileName} -v error -y -vf fps=${form.getFieldValue('fps')} output__%02d.png`;
-        await execCommands(command);
+        await runCommands(command);
     }
     async function fpsScaleImage() {
         const fileName = form.getFieldValue('selectedFile');
         const command = `-i ${fileName} -v error -y -vf fps=${form.getFieldValue('fps')},scale=100:-1 output__%02d.png`;
-        await execCommands(command);
+        await runCommands(command);
     }
     async function selectImage() {
         const fileName = form.getFieldValue('selectedFile');
         const command = `-i ${fileName} -v error -y -vf select=eq(n\\,0),crop=100:100 output__%02d.png`;
-        await execCommands(command);
+        await runCommands(command);
     }
     async function getMetadata() {
         const file = localPath(`output.${form.getFieldValue('videoType')}`);
         const command = `-v error -i ${file} -show_streams -show_format -print_format json`;
-        await execCommands(command);
+        await runCommands(command);
     }
 
     async function scale(width) {
@@ -156,7 +140,7 @@ export default function FFmpegComponent() {
         const command = `-v error -i ${file} -y -vf scale=${width}:-1 output_w_${width}.${form.getFieldValue(
             'videoType'
         )}`;
-        await execCommands(command);
+        await runCommands(command);
     }
 
     const [form] = Form.useForm();
@@ -179,13 +163,13 @@ export default function FFmpegComponent() {
         const { ext } = parsePath(file);
         const command = `-i ${file} -v error -y -vf crop=${w}:${h} output_crop_${ext}`;
         // const command = `-i ${file} -v error -y -vf crop=in_w/2:in_h/2:in_w/4:in_h/4 output_crop_${ext}}`;
-        await execCommands(command);
+        await runCommands(command);
     }
 
     async function selectFrames() {
         const file = localPath(form.getFieldValue('selectedFile'));
         const command = `-i ${file} -v error -y -vframes 1000 -vf scale=300:100 output_frame%02d.png`;
-        await execCommands(command);
+        await runCommands(command);
     }
 
     async function extract(ext): Promise<void> {
@@ -196,11 +180,11 @@ export default function FFmpegComponent() {
         } else if (ext == '.h264') {
             command = `-i ${file} -v error -vcodec copy -an output_1.h264`;
         }
-        await execCommands(command);
+        await runCommands(command);
     }
 
     return (
-        <div className="p-4">
+        <div className="p-4 text-center">
             <div>
                 <Space direction="horizontal" style={{ height: '100%' }}>
                     <video ref={videoRef} controls style={{ width: '300px', height: '300px' }}></video>
@@ -264,6 +248,7 @@ export default function FFmpegComponent() {
                 <Space>
                     <Button onClick={listDir}>listDir</Button>
                     <Button onClick={createDir}>createDir</Button>
+                    {/* @ts-ignore */}
                     <Button onClick={deleteDir}>deleteDir</Button>
                 </Space>
                 <Divider>ffprobe ❌</Divider>

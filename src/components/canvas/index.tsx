@@ -1,35 +1,30 @@
-import { useEffectOnce } from 'usehooks-ts';
-import Triangle, { Arc } from './shape';
-
-export default function Canvas() {
-  useEffectOnce(() => {
-    const canvas = document.getElementById('canvas') as HTMLCanvasElement;
-    const ctx = canvas.getContext('2d')!;
-    // 绘制矩形
-    ctx.fillStyle = 'blue'; // 填充颜色
-    ctx.fillRect(10, 10, 100, 100); // 绘制矩形
-
-    // 绘制文本
-    ctx.font = '20px Arial';
-    ctx.fillStyle = 'white';
-    ctx.fillText('Hello, Canvas!', 60, 130);
-
-    ctx.beginPath();
-    ctx.arc(50, 50, 10, 0, Math.PI);
-    ctx.stroke();
-    console.log(ctx.getImageData(10, 10, 10, 100));
-  });
-  function clickOnCanvas(e) {
-    console.log('click on canvas', e);
-  }
-  return (
-    <div className="p-4">
-      <canvas id="canvas" className=" bg-red-500 outline-1" onClick={clickOnCanvas}></canvas>
-      <br />
-      <div className="flex">
-        <Triangle></Triangle>
-        <Arc></Arc>
-      </div>
-    </div>
-  );
+import { Button, Space, Typography } from 'antd';
+import classNames from 'classnames';
+import { Link } from 'react-router-dom';
+export default function Index() {
+    return (
+        <div className={classNames('text-center')}>
+            <Typography.Title level={2}>canvas</Typography.Title>
+            <Space>
+                <Link to={'canvas'}>
+                    <Button type="link">Native Canvas</Button>
+                </Link>
+                <Link to={'collision-detection'}>
+                    <Button type="link">Collision Detection</Button>
+                </Link>
+                <Link to={'video-cropper'}>
+                    <Button type="link">Video Cropper</Button>
+                </Link>
+                <Link to={'konva'}>
+                    <Button type="link">Konva</Button>
+                </Link>
+                <Link to={'video'}>
+                    <Button type="link">Video Player</Button>
+                </Link>
+                <Link to={'reactkonva'}>
+                    <Button type="link">video vs frame blob | konva-react,native canvas</Button>
+                </Link>
+            </Space>
+        </div>
+    );
 }

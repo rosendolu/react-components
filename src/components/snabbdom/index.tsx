@@ -11,7 +11,7 @@ export default function Index() {
             styleModule, // handles styling on elements with support for animations
             eventListenersModule, // attaches event listeners
         ]);
-        debugger;
+        // debugger;
         const container = document.getElementById('container')!;
         const exitNode = h('div#container.two.classes');
         const vnode = h('div#container.two.classes', { on: { click: () => console.log('div clicked') } }, [

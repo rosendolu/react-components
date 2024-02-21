@@ -35,6 +35,7 @@ export default function App() {
                         // Otherwise, set the currently selected blocks type to "code".
                         Transforms.setNodes(
                             editor,
+                            // @ts-ignore
                             { type: 'code' },
                             {
                                 match: n => {

@@ -96,6 +96,7 @@ function RichTextEditor() {
                 children: [
                     {
                         text: 'pause block',
+                        // @ts-ignore
                         uid: nanoid(),
                         type: 'pause',
                     },
@@ -115,6 +116,7 @@ function RichTextEditor() {
                 children: [
                     {
                         text: '',
+                        // @ts-ignore
                         uid: nanoid(),
                     },
                 ],
@@ -126,6 +128,7 @@ function RichTextEditor() {
     function togglePause(e) {
         Transforms.setNodes(
             editor,
+            // @ts-ignore
             { type: 'pause' },
             { match: n => Element.isElement(n) && Editor.isBlock(editor, n) }
         );
@@ -138,6 +141,7 @@ function RichTextEditor() {
     function setNode(event) {
         // Determine whether any of the currently selected blocks are code blocks.
         const [match] = Editor.nodes(editor, {
+            // @ts-ignore
             match: n => n.type === 'code',
         });
 
@@ -190,11 +194,14 @@ function RichTextEditor() {
                             case '`': {
                                 event.preventDefault();
                                 const [match] = Editor.nodes(editor, {
+                                    // @ts-ignore
                                     match: n => n?.type === 'code',
                                 });
                                 Transforms.setNodes(
                                     editor,
+                                    // @ts-ignore
                                     { type: match ? 'paragraph' : 'code' },
+                                    // @ts-ignore
                                     { match: n => Editor.isBlock(editor, n) }
                                 );
                                 break;
