@@ -1,0 +1,68 @@
+# This is a basic workflow to help you get started with Actions
+name: Build & Publish
+
+# Controls when the workflow will run
+on:
+    # Triggers the workflow on push or pull request events but only for the master branch
+    push:
+        # [ master ]
+        branches:
+            - master
+    # Allows you to run this workflow manually from the Actions tab
+    workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+    # This workflow contains a single job called "build"
+    publish-doc:
+        # The type of runner that the job will run on
+        runs-on: ubuntu-latest
+
+        # Steps represent a sequence of tasks that will be executed as part of the job
+        steps:
+            # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+            - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+            - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+            - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+            - name: Checkout branch
+              uses: actions/checkout@v2
+              with:
+                  ref: master
+            - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
+            # - run: echo "🖥️ The workflow is now ready to test your code on the runner."
+            - name: List files in the repository
+              run: |
+                  ls ${{ github.workspace }}
+            - run: echo "🍏 This job's status is ${{ job.status }}."
+            - name: Use Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: '20.10.0'
+            # prepare env
+            # - name: Prepare env
+            #   run: |
+            #     # source ~/.bashrc
+            #     # node -v
+            #     # curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+            #     # export NVM_DIR="$HOME/.nvm"
+            #     # [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            #     # nvm install v12.22.12
+            #     # nvm use
+            #     node -v
+            #     npm config list
+            # Runs a single command using the runners shell
+            - name: Install and build
+              run: |
+                  npm ci
+                  npm run build
+                  echo "npm run build success"
+            # Runs a set of commands using the runners shell
+            - name: Deploy
+              uses: easingthemes/ssh-deploy@main
+              env:
+                  SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
+                  ARGS: '-rltgoDzvO --delete'
+                  SOURCE: 'dist/'
+                  REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+                  REMOTE_USER: ${{ secrets.REMOTE_USER }}
+                  TARGET: ${{ secrets.REMOTE_TARGET }}
