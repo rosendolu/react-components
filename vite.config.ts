@@ -7,7 +7,7 @@ export default defineConfig({
     plugins: [react()],
     envDir: 'env',
     envPrefix: ['__APP__'],
-    base: '/react-practice',
+    base: './',
     optimizeDeps: {
         exclude: ['@ffmpeg/ffmpeg', '@ffmpeg/util'],
     },
