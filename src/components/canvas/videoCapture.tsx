@@ -70,7 +70,7 @@ export default function VideoCapture() {
         <div className="m-auto text-center">
             <h2 className={classNames('text-center', 'p-2')}>canvas 截取视频流，修改 imageData并渲染到画布</h2>
 
-            <Space direction="horizontal">
+            <Space direction="horizontal" wrap>
                 <div className="text-center">
                     <video
                         width={w}

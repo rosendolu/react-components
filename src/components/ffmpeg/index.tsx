@@ -186,7 +186,7 @@ export default function FFmpegComponent() {
     return (
         <div className="p-4 text-center">
             <div>
-                <Space direction="horizontal" style={{ height: '100%' }}>
+                <Space direction="horizontal" style={{ height: '100%' }} wrap>
                     <video ref={videoRef} controls style={{ width: '300px', height: '300px' }}></video>
                     <List
                         size="small"
@@ -236,27 +236,27 @@ export default function FFmpegComponent() {
                     </Select>
                 </Form.Item>
                 <Divider>Load</Divider>
-                <Space>
+                <Space wrap>
                     <Button onClick={load}>Load ffmpeg-core (~31 MB)</Button>
                 </Space>
                 <Divider>File</Divider>
-                <Space>
+                <Space wrap>
                     <Button onClick={downloadFile}>download</Button>
                     <Button onClick={readFile}>readFile</Button>
                 </Space>
                 <Divider>Dir</Divider>
-                <Space>
+                <Space wrap>
                     <Button onClick={listDir}>listDir</Button>
                     <Button onClick={createDir}>createDir</Button>
                     {/* @ts-ignore */}
                     <Button onClick={deleteDir}>deleteDir</Button>
                 </Space>
                 <Divider>ffprobe ❌</Divider>
-                <Space>
+                <Space wrap>
                     <Button onClick={getMetadata}>stream & format</Button>
                 </Space>
                 <Divider>Video Format</Divider>
-                <Space>
+                <Space wrap size={'small'}>
                     <Button onClick={() => convertVideoFormat('output.webm')}>to webm ❌</Button>
                     <Button onClick={() => convertVideoFormat('output.mp4')}>to mp4</Button>
                     <Button onClick={() => scale(100)}>scale w100</Button>
@@ -270,7 +270,7 @@ export default function FFmpegComponent() {
                     </Form.Item>
                 </Space>
                 <Divider></Divider>
-                <Space>
+                <Space wrap>
                     <Button onClick={() => videoToImage()}>fps</Button>
                     <Button onClick={() => fpsScaleImage()}>fps+scale</Button>
                     <Button onClick={() => selectImage()}>select</Button>
@@ -278,7 +278,7 @@ export default function FFmpegComponent() {
                 </Space>
 
                 <Divider>Extract</Divider>
-                <Space>
+                <Space wrap>
                     <Button onClick={() => extract('.aac')}>audio</Button>
                     <Button onClick={() => extract('.h264')}>h264</Button>
                 </Space>

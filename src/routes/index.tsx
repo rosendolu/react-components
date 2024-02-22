@@ -1,5 +1,4 @@
 import { createHashRouter } from 'react-router-dom';
-import App from '../App';
 import VideoPosterCapture from '../components/VideoPosterCapture';
 import Canvas from '../components/canvas';
 import CollisionDetection from '../components/canvas/collisionDetection';
@@ -15,11 +14,12 @@ import FFmpeg from '../components/ffmpeg';
 import { default as Snabbdom } from '../components/snabbdom';
 import VideoCropper from '../components/video-cropper';
 import VideoPosterCropper from '../components/videoPosterCropper';
+import Home from '../pages/home';
 
 export const routerConfig = [
     {
         path: '/',
-        element: <App></App>,
+        element: <Home></Home>,
     },
 
     {

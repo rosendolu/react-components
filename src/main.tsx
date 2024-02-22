@@ -5,18 +5,23 @@ import log from 'loglevel';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Toaster } from 'react-hot-toast';
-import { RouterProvider } from 'react-router-dom';
+import App from './App';
 import './index.css';
-import { router } from './routes';
 dayjs.extend(duration);
 log.setLevel('trace');
 globalThis.log = log;
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <React.StrictMode>
+        <App></App>
         <Toaster />
-        <RouterProvider router={router}></RouterProvider>
         <div className="h-12"></div>
+        <Copyright></Copyright>
+    </React.StrictMode>
+);
+
+function Copyright() {
+    return (
         <footer className="fixed bottom-0 left-0 right-0 flex h-12 items-center justify-center bg-slate-500">
             <Typography.Text italic>
                 Powered by{' '}
@@ -25,5 +30,5 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
                 </Typography.Link>
             </Typography.Text>
         </footer>
-    </React.StrictMode>
-);
+    );
+}

@@ -111,7 +111,7 @@ export default function KonvaReact() {
     return (
         <div className="text-center">
             <Typography.Title>react-konva preview video</Typography.Title>
-            <Space>
+            <Space wrap>
                 <Button onClick={load}>load ffmpeg</Button>
                 <Button onClick={downloadFile}>downloadFile</Button>
                 <Button onClick={listDir}>listDir</Button>
@@ -122,7 +122,7 @@ export default function KonvaReact() {
                 </Button>
             </Space>
             <Divider></Divider>
-            <Space>
+            <Space wrap>
                 <div>
                     <video
                         onLoadedMetadata={videoLoad}

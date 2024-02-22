@@ -1,30 +1,38 @@
-import { Button, Space, Typography } from 'antd';
+import { Typography } from 'antd';
 import classNames from 'classnames';
-import { Link } from 'react-router-dom';
+import { NavigatorMenu } from '../NavigatorMenu';
 export default function Index() {
+    const conf = [
+        {
+            to: 'canvas',
+            label: '>Native Canvas',
+        },
+        {
+            to: 'collision-detection',
+            label: 'Collision Detection',
+        },
+        {
+            to: 'video-cropper',
+            label: 'Video Cropper',
+        },
+        {
+            to: 'konva',
+            label: 'Konva',
+        },
+        {
+            to: 'video',
+            label: 'Video Player',
+        },
+        {
+            to: 'reactkonva',
+            label: 'video vs frame blob | konva-react,native canvas',
+        },
+    ];
     return (
-        <div className={classNames('text-center')}>
+        <div className={classNames('text-center', 'p-2')}>
             <Typography.Title level={2}>canvas</Typography.Title>
-            <Space>
-                <Link to={'canvas'}>
-                    <Button type="link">Native Canvas</Button>
-                </Link>
-                <Link to={'collision-detection'}>
-                    <Button type="link">Collision Detection</Button>
-                </Link>
-                <Link to={'video-cropper'}>
-                    <Button type="link">Video Cropper</Button>
-                </Link>
-                <Link to={'konva'}>
-                    <Button type="link">Konva</Button>
-                </Link>
-                <Link to={'video'}>
-                    <Button type="link">Video Player</Button>
-                </Link>
-                <Link to={'reactkonva'}>
-                    <Button type="link">video vs frame blob | konva-react,native canvas</Button>
-                </Link>
-            </Space>
+
+            <NavigatorMenu conf={conf}></NavigatorMenu>
         </div>
     );
 }
