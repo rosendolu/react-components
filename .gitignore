@@ -26,3 +26,4 @@ debug/**
 *.zip
 public/output*
 tsconfig.tsbuildinfo
+public/frame/*

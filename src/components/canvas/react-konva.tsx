@@ -6,6 +6,12 @@ import useImage from 'use-image';
 import { useEffectOnce } from 'usehooks-ts';
 import { execCommands, ffmpeg, ffmpegDownloadFile, ffmpegListDir, loadFFmpeg } from '../ffmpeg/tools';
 
+const VIDEOURL = `https://devapi.nnkosmos.com/file/upload/preprocess/action/4398/812/play.webm`;
+// const VIDEOURL = `/output.webm`;
+
+// const webm = `/output_320.webm`;
+// const webm = `https://devapi.nnkosmos.com/file/upload/preprocess/action/4398/812/play.webm`;
+
 export default function KonvaReact() {
     const w = 320,
         h = 569;
@@ -51,6 +57,10 @@ export default function KonvaReact() {
         const ctx1 = c1Ref.current.getContext('2d');
         const ctx2 = c2Ref.current.getContext('2d');
 
+        // json
+        // ctx1.imageSmoothingQuality = 'high';
+        // ctx2.imageSmoothingQuality = 'low';
+
         const { duration, currentTime } = video;
         const height = video.videoWidth,
             width = video.videoHeight;
@@ -58,13 +68,16 @@ export default function KonvaReact() {
 
         // imgRef.current.image = videoRef.current;
         // native canvas
-        ctx1.drawImage(video, 0, 0);
+        ctx1.clearRect(0, 0, w, h);
+        ctx1.imageSmoothingEnabled = true;
+        ctx1.drawImage(video, 0, 0, w, h);
 
         // react-konva render video
         layerRef.current.draw();
 
         // react-konva render frame blob
         const frame = String(((currentTime / 0.04) >> 0) + 1).padStart(4, '0');
+
         ffmpeg.readFile(`/img_${frame}.png`).then((data: any) => {
             const blobURI = URL.createObjectURL(new Blob([data.buffer], { type: `image/png` }));
             // @ts-ignore
@@ -73,7 +86,9 @@ export default function KonvaReact() {
             imageFrame.src = blobURI;
             imageFrame.onload = () => {
                 // c2Ref
-                ctx2.drawImage(imageFrame, 0, 0);
+                ctx2.clearRect(0, 0, w, h);
+                ctx2.imageSmoothingEnabled = true;
+                ctx2.drawImage(imageFrame, 0, 0, w, h);
 
                 frameImageLayerRef.current.draw();
 
@@ -86,12 +101,13 @@ export default function KonvaReact() {
         log.info('Load Successfully');
     }
     async function videoToImage() {
-        const command = `-i output.webm -v error -y -vf fps=25 img_%4d.png`;
+        const command = `-i output.webm -y -vf fps=25 img_%4d.png`;
+        // const command = `-c:v libvpx-vp9 -i output.webm -y img_%4d.png`;
+        // const command = ['-c:v', 'libvpx-vp9', '-i', 'output.webm', 'img_%4d.png'].join(' ');
         await execCommands(command);
     }
     async function downloadFile() {
-        const webm = `/output_320.webm`;
-        await ffmpegDownloadFile(webm, 'output.webm');
+        await ffmpegDownloadFile(VIDEOURL, 'output.webm');
         log.info('downloadFile success');
     }
     async function listDir() {
@@ -133,7 +149,7 @@ export default function KonvaReact() {
                         ref={videoRef}
                         controls
                         onTimeUpdate={onTimeUpdate}
-                        src="/output_320.webm"
+                        src={VIDEOURL}
                         style={{ width: w, height: h }}
                         className={'outline-dashed outline-1 outline-red-500'}></video>
                     <Typography.Text>video tag</Typography.Text>
@@ -154,9 +170,9 @@ export default function KonvaReact() {
                         className={'outline-dashed outline-1 outline-blue-500'}
                         style={{ width: w, height: h }}>
                         <Layer ref={layerRef}>
+                            <Circle draggable x={100} y={100} stroke="red" radius={100} />
                             <Image width={w} height={h} image={videoFrame}></Image>
                             <Rect draggable width={50} height={50} fill="green" />
-                            <Circle draggable x={100} y={100} stroke="red" radius={50} />
                         </Layer>
                     </Stage>
                     <Typography.Text>react-konva + video</Typography.Text>
@@ -177,9 +193,9 @@ export default function KonvaReact() {
                         className={'outline-dashed outline-1 outline-yellow-500'}
                         style={{ width: w, height: h }}>
                         <Layer ref={frameImageLayerRef}>
+                            <Circle draggable x={100} y={100} stroke="red" radius={100} />
                             <Image width={w} height={h} ref={imgRef} image={imageFrame}></Image>
                             <Rect draggable width={50} height={50} fill="green" />
-                            <Circle draggable x={100} y={100} stroke="red" radius={50} />
                         </Layer>
                     </Stage>
                     <Typography.Text>react-konva + blob image</Typography.Text>
@@ -191,9 +207,9 @@ export default function KonvaReact() {
                         className={'outline-dashed outline-1 outline-yellow-500'}
                         style={{ width: w, height: h }}>
                         <Layer>
+                            <Circle draggable x={100} y={100} stroke="red" radius={100} />
                             <Image width={w} height={h} ref={imgRef} image={image}></Image>
                             <Rect draggable width={50} height={50} fill="green" />
-                            <Circle draggable x={100} y={100} stroke="red" radius={50} />
                         </Layer>
                     </Stage>
                     <Typography.Text>react-konva + blob image + useImage</Typography.Text>
