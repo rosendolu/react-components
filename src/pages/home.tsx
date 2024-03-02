@@ -34,6 +34,10 @@ export const router = [
         to: '/canvas',
         label: 'Canvas',
     },
+    {
+        to: '/wasm',
+        label: 'WebAssembly',
+    },
 ];
 
 export default function Home() {

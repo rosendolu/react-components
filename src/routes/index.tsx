@@ -14,6 +14,7 @@ import FFmpeg from '../components/ffmpeg';
 import { default as Snabbdom } from '../components/snabbdom';
 import VideoCropper from '../components/video-cropper';
 import VideoPosterCropper from '../components/videoPosterCropper';
+import WebAssemblyPage from '../components/wasm';
 import Home from '../pages/home';
 
 export const routerConfig = [
@@ -62,6 +63,15 @@ export const routerConfig = [
             {
                 index: true,
                 element: <ErrorHandle></ErrorHandle>,
+            },
+        ],
+    },
+    {
+        path: '/wasm',
+        children: [
+            {
+                index: true,
+                element: <WebAssemblyPage />,
             },
         ],
     },
