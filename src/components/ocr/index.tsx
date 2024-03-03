@@ -86,7 +86,7 @@ export default function OCRDemo() {
 
     return (
         <div>
-            <Typography.Title level={1}>OCR</Typography.Title>
+            <Typography.Title level={1}>OCR IN BROWSER</Typography.Title>
             <Divider></Divider>
             <Space wrap>
                 <Upload
