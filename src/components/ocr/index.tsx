@@ -93,10 +93,10 @@ export default function OCRDemo() {
                     name="avatar"
                     listType="picture-card"
                     className="avatar-uploader"
-                    showUploadList={true}
+                    showUploadList={false}
                     action={file => Promise.resolve('')}
                     customRequest={() => 1}
-                    // beforeUpload={beforeUpload}
+                    // beforeUpload={}
                     onChange={handleChange}>
                     {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
                 </Upload>
