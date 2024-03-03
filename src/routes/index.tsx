@@ -11,6 +11,7 @@ import RichTextEditor from '../components/editor';
 import MyEditor from '../components/editor/setNode';
 import ErrorHandle from '../components/error';
 import FFmpeg from '../components/ffmpeg';
+import OCRDemo from '../components/ocr';
 import { default as Snabbdom } from '../components/snabbdom';
 import VideoCropper from '../components/video-cropper';
 import VideoPosterCropper from '../components/videoPosterCropper';
@@ -72,6 +73,15 @@ export const routerConfig = [
             {
                 index: true,
                 element: <WebAssemblyPage />,
+            },
+        ],
+    },
+    {
+        path: '/ocr',
+        children: [
+            {
+                index: true,
+                element: <OCRDemo />,
             },
         ],
     },

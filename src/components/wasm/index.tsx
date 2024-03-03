@@ -19,7 +19,7 @@ export default function WebAssemblyPage() {
     return (
         <div>
             <Space wrap>
-                <Button onClick={echo}>invoke echo </Button>
+                <Button onClick={echo}>echo</Button>
             </Space>
         </div>
     );

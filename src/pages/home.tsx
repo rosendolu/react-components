@@ -38,6 +38,10 @@ export const router = [
         to: '/wasm',
         label: 'WebAssembly',
     },
+    {
+        to: '/ocr',
+        label: 'OCR',
+    },
 ];
 
 export default function Home() {
