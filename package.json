@@ -24,6 +24,7 @@
         "html-to-image": "^1.11.11",
         "is-promise": "^4.0.0",
         "konva": "^9.2.2",
+        "less": "^4.2.0",
         "localforage": "^1.10.0",
         "lodash": "^4.17.21",
         "loglevel": "^1.8.1",

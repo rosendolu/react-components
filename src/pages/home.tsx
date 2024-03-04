@@ -42,6 +42,10 @@ export const router = [
         to: '/ocr',
         label: 'OCR',
     },
+    {
+        to: '/waterfall',
+        label: 'Waterfall Card',
+    },
 ];
 
 export default function Home() {
