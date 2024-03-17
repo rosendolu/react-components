@@ -7,6 +7,7 @@ import NativeCanvas from '../components/canvas/native-canvas';
 import KonvaReact from '../components/canvas/react-konva';
 import VideoCapture from '../components/canvas/videoCapture';
 import WaterfallCard from '../components/css/WaterfallCard';
+import PseudoElements from '../components/css/pseudo';
 import DomToImg from '../components/domToImg';
 import RichTextEditor from '../components/editor';
 import MyEditor from '../components/editor/setNode';
@@ -28,6 +29,10 @@ export const routerConfig = [
     {
         path: '/waterfall',
         element: <WaterfallCard></WaterfallCard>,
+    },
+    {
+        path: '/pseudo-elements',
+        element: <PseudoElements></PseudoElements>,
     },
     {
         path: '/domtoimg',

@@ -1,66 +1,109 @@
-import { Button } from 'antd';
+import { Button, Space } from 'antd';
 import log from 'loglevel';
+import toast from 'react-hot-toast';
 
 export default function ErrorHandle() {
+    function assert(expression, msg) {
+        if (!expression) {
+            throw new Error(msg);
+        }
+    }
+
     async function submit_promise() {
+        const toastId = 'xxxx';
         try {
-            await Promise.reject('xxx');
-            await new Promise(resolve => {
-                setTimeout(() => {
-                    resolve(2);
-                    log.debug('resolve step1');
-                }, 1e3);
-            });
-            log.debug('step1');
-            await new Promise((resolve, reject) => {
-                setTimeout(() => {
-                    reject('0');
-                    log.error('reject', 'step2');
-                }, 1e3);
-            });
-            log.debug('step2');
+            toast.loading('1....', { id: toastId });
+            let res = 0;
+            // step 1
+            // always resolve operation code (unix)
+            res = await step1(res);
+            assert(res, '无效地址');
+
+            // reject error
+            res = await step2(100);
+            // async task
+
+            step3(2).catch(err => assert(false, 'async error '));
+            step3(2).catch(err => assert(false, 'async error '));
+
+            toast.success('successfully', { id: toastId });
         } catch (error) {
             debugger;
+            toast.error('error xxx', { id: toastId });
             log.error('err', error);
         } finally {
+            // cleanup
             log.debug('end');
         }
     }
+
+    async function step1(res: number) {
+        res = await new Promise(resolve => {
+            setTimeout(() => {
+                resolve(2);
+                log.debug('resolve step1');
+            }, 1e3);
+        });
+        return res;
+    }
+    async function step2(res: number) {
+        res = await new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve(2);
+                log.debug('resolve step2');
+            }, 1e3);
+        });
+        return res;
+    }
+    async function step3(res: number) {
+        res = await new Promise((resolve, reject) => {
+            setTimeout(() => {
+                reject(2);
+                log.debug('reject step3');
+            }, 1e3);
+        });
+        return res;
+    }
+
     async function submit_throw() {
         try {
-            let stepRes = await new Promise(resolve => {
-                setTimeout(() => {
-                    resolve(2);
-                    log.debug('resolve step1');
-                }, 1e3);
+            let res = 0;
+            // step 1
+            // always resolve
+            res = await step1(res);
+
+            // Bad
+
+            // if (!res) return;
+
+            // if (!res) {
+            //     throw new Error('xxx')
+            // }
+
+            // Good
+            assert(res, 'xxx');
+
+            // reject error
+            res = await step2(100);
+
+            // async task
+            step3(2).catch(err => {
+                // xxxx
             });
-            log.debug('step1');
-            stepRes = await new Promise((resolve, reject) => {
-                setTimeout(() => {
-                    resolve(0);
-                    log.error('reject', 'step2');
-                }, 1e3);
-            });
-            if (!stepRes) {
-                throw 'step2 failed';
-                // throw new Error('step2 failed');
-            }
-            log.debug('step2');
+
+            // finished
         } catch (error) {
-            debugger;
-            log.error('err', error, JSON.stringify(error));
+            log.error('err', error);
         } finally {
+            // cleanup
             log.debug('end');
         }
     }
 
     return (
-        <div>
-            <header className="fixed left-0 right-0 top-0 z-10 flex h-16 items-center justify-center ">
-                <Button onClick={submit_promise}>promise based submit</Button>
-                <Button onClick={submit_throw}>throw based submit</Button>
-            </header>
-            <div className="pb-16 pt-16"></div>
-        </div>
+        <Space wrap>
+            <Button onClick={submit_promise}>promise based submit</Button>
+            <Button onClick={submit_throw}>throw based submit</Button>
+        </Space>
     );
 }

@@ -46,6 +46,10 @@ export const router = [
         to: '/waterfall',
         label: 'Waterfall Card',
     },
+    {
+        to: '/pseudo-elements',
+        label: 'CSS3',
+    },
 ];
 
 export default function Home() {
