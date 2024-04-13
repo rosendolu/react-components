@@ -1,11 +1,15 @@
-import { RouterProvider } from 'react-router-dom';
+import { LoadingOutlined } from '@ant-design/icons';
+import { Suspense } from 'react';
 import './App.css';
-import { router } from './routes';
+import RouterElements from './routes';
 
 export default function App() {
     return (
         <div className="p-2 text-center">
-            <RouterProvider router={router}></RouterProvider>
+            {/* @ts-ignore */}
+            <Suspense fallback={<LoadingOutlined />}>
+                <RouterElements></RouterElements>
+            </Suspense>
         </div>
     );
 }
