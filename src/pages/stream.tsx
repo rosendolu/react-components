@@ -3,6 +3,7 @@ import log from 'loglevel';
 import { useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useEffectOnce } from 'usehooks-ts';
+const baseURL = import.meta.env.DEV ?'http://localhost:3000':'https://api.rosendo.fun'
 
 export default function Stream() {
     const [data, setData] = useState<any[]>([]);
@@ -24,7 +25,7 @@ export default function Stream() {
     async function getData(responseType) {
         const toastID = 'fetch-toast';
         toast.loading('loading...', { id: toastID });
-        fetch(`https://api.rosendo.fun/res/stream/${responseType}`)
+        fetch(`${baseURL}/res/stream/${responseType}`)
             .then(response => response.body)
             .then(body => {
                 const reader = body!.getReader();

@@ -19,6 +19,7 @@
         "@reduxjs/toolkit": "^1.9.5",
         "30-seconds-of-code": "^1.2.3",
         "antd": "^5.12.2",
+        "caniuse-lite": "^1.0.30001609",
         "classnames": "^2.3.2",
         "dayjs": "^1.11.10",
         "html-to-image": "^1.11.11",
