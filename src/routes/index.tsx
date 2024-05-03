@@ -2,6 +2,7 @@ import { lazy } from 'react';
 import { RouterProvider, createHashRouter } from 'react-router-dom';
 import { RouterMenuContext } from '../helpers/context';
 
+const FileComponents = lazy(() => import('../components/file'));
 const Stream = lazy(() => import('../pages/stream'));
 const VideoPosterCapture = lazy(() => import('../components/VideoPosterCapture'));
 const Canvas = lazy(() => import('../components/canvas'));
@@ -30,6 +31,11 @@ const routerConfig = [
         label: 'Home',
         path: '/',
         element: <Home></Home>,
+    },
+    {
+        label: 'File',
+        path: '/file',
+        element: <FileComponents />,
     },
     {
         label: 'Http',
