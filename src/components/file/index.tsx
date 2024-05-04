@@ -1,8 +1,25 @@
-import { Button, Divider, Space, Typography } from 'antd';
-import { useRef } from 'react';
+import { Button, Divider, Input, Space, Typography } from 'antd';
+import { useEffect, useRef, useState } from 'react';
 
 export default function FileComponents() {
     const inputRef: any = useRef();
+    const [uploadRes, setUploadRes] = useState<any>(null);
+
+    useEffect(() => {
+        var videoSrc = uploadRes?.playUrl;
+        if (!videoSrc) return;
+        var video: any = document.getElementById('video_hls')!;
+        if (video.canPlayType('application/vnd.apple.mpegurl')) {
+            video.src = videoSrc;
+            // If no native HLS support, check if HLS.js is supported
+            //
+        } else if (Hls.isSupported()) {
+            var hls = new Hls();
+            hls.loadSource(videoSrc);
+            hls.attachMedia(video);
+        }
+    }, [uploadRes]);
+
     function uploadFile() {
         const file = inputRef.current.files[0];
 
@@ -25,6 +42,7 @@ export default function FileComponents() {
                 return response.json();
             })
             .then(data => {
+                // setUploadRes(data.data);
                 console.log('文件上传成功:', data);
             })
             .catch(error => {
@@ -40,11 +58,17 @@ export default function FileComponents() {
         <div>
             <Typography.Title>File Operation</Typography.Title>
             <Space direction="horizontal">
+                <Input
+                    onBlur={e => {
+                        setUploadRes({ playUrl: e.target.value });
+                    }}
+                    placeholder="hls url"></Input>
                 <input ref={inputRef} type="file" id="fileInput" />
                 <Button onClick={uploadFile}>Upload</Button>
                 <Button onClick={getList}>getList</Button>
             </Space>
             <Divider></Divider>
+            <video id="video_hls" controls></video>
         </div>
     );
 }
