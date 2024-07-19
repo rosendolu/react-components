@@ -3,7 +3,7 @@ import log from 'loglevel';
 import { useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useEffectOnce } from 'usehooks-ts';
-const baseURL = import.meta.env.DEV ?'http://localhost:3000':'https://api.rosendo.fun'
+import { baseURL } from '../helpers/constant';
 
 export default function Stream() {
     const [data, setData] = useState<any[]>([]);

@@ -9,7 +9,7 @@ export default defineConfig({
     envPrefix: ['__APP__'],
     base: './',
     optimizeDeps: {
-        exclude: ['@ffmpeg/ffmpeg', '@ffmpeg/util'],
+        exclude: ['@ffmpeg/ffmpeg', '@ffmpeg/util', '@jsquash/webp'],
     },
 
     resolve: {

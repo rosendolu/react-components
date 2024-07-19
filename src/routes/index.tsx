@@ -2,6 +2,8 @@ import { lazy } from 'react';
 import { RouterProvider, createHashRouter } from 'react-router-dom';
 import { RouterMenuContext } from '../helpers/context';
 
+const AnimateImg = lazy(() => import('../components/canvas/gif'));
+const VpsComponents = lazy(() => import('../components/vps'));
 const FileComponents = lazy(() => import('../components/file'));
 const Stream = lazy(() => import('../pages/stream'));
 const VideoPosterCapture = lazy(() => import('../components/VideoPosterCapture'));
@@ -128,6 +130,16 @@ const routerConfig = [
         ],
     },
     {
+        label: 'vps',
+        path: '/vps',
+        children: [
+            {
+                index: true,
+                element: <VpsComponents></VpsComponents>,
+            },
+        ],
+    },
+    {
         label: 'Canvas',
         path: '/canvas',
         children: [
@@ -158,6 +170,10 @@ const routerConfig = [
             {
                 path: 'reactkonva',
                 element: <KonvaReact></KonvaReact>,
+            },
+            {
+                path: 'animate',
+                element: <AnimateImg />,
             },
         ],
     },
