@@ -1,5 +1,7 @@
 import { lazy } from 'react';
 import { RouterProvider, createHashRouter } from 'react-router-dom';
+import CanvasCarousel from '../components/canvas/carousel';
+import CanvasSlide from '../components/canvas/slide';
 import { RouterMenuContext } from '../helpers/context';
 
 const AnimateImg = lazy(() => import('../components/canvas/gif'));
@@ -174,6 +176,14 @@ const routerConfig = [
             {
                 path: 'animate',
                 element: <AnimateImg />,
+            },
+            {
+                path: 'slide',
+                element: <CanvasSlide></CanvasSlide>,
+            },
+            {
+                path: 'carousel',
+                element: <CanvasCarousel></CanvasCarousel>,
             },
         ],
     },

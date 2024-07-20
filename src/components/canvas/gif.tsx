@@ -76,6 +76,7 @@ function AnimateImage() {
         stage.add(layer);
         anim.start();
         return () => {
+            anim.stop();
             layer.destroy();
             stage.destroy();
         };
