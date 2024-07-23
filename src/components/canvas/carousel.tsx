@@ -1,4 +1,4 @@
-import { Divider, Radio, Space, Typography } from 'antd';
+import { Divider, InputNumber, Radio, Space, Typography } from 'antd';
 import Konva from 'konva';
 import { useEffect, useRef, useState } from 'react';
 
@@ -26,6 +26,9 @@ export default function CanvasCarousel() {
     const canvasRef: any = useRef();
     const stageRef: any = useRef();
     const layerRef: any = useRef<Konva.Layer>();
+    const [displayDuration, setDisplayDuration] = useState(3000);
+    //         const transitionDuration = 1000; // 图片切换的时间（毫秒）
+    const [transitionDuration, setTransitionDuration] = useState(1000);
 
     const ImgList = ['1.jpeg', '2.jpeg', '3.jpeg', '4.jpeg'].map(url => {
         let img = new Image();
@@ -49,15 +52,13 @@ export default function CanvasCarousel() {
         let offset = 0;
 
         const totalImages = ImgList.length;
-        const displayDuration = 3000; // 每张图片显示的时间（毫秒）
-        const transitionDuration = 1000; // 图片切换的时间（毫秒）
 
         let currentImageIndex = 0;
         let lastSwitchTime = performance.now();
         let isTransitioning = false;
         let transitionStartTime = 0;
         let startXPos = 0;
-        let endXPos = -w;
+        let endXPos = w;
 
         draw(lastSwitchTime);
         function draw(timestamp) {
@@ -70,7 +71,6 @@ export default function CanvasCarousel() {
             if (elapsed >= displayDuration && !isTransitioning) {
                 isTransitioning = true;
                 transitionStartTime = timestamp;
-                lastSwitchTime = timestamp;
                 currentImageIndex = (currentImageIndex + 1) % totalImages;
             }
 
@@ -81,17 +81,18 @@ export default function CanvasCarousel() {
 
                 ctx.drawImage(
                     ImgList[(currentImageIndex - 1 + totalImages) % totalImages],
-                    startXPos + xOffset,
+                    startXPos - xOffset,
                     0,
                     w,
                     h
                 );
-                ctx.drawImage(ImgList[currentImageIndex], endXPos + xOffset, 0, w, h);
+                ctx.drawImage(ImgList[currentImageIndex], endXPos - xOffset, 0, w, h);
 
                 if (progress === 1) {
                     isTransitioning = false;
+                    lastSwitchTime = timestamp;
                     startXPos = 0;
-                    endXPos = -w;
+                    endXPos = w;
                 }
             } else {
                 ctx.drawImage(ImgList[currentImageIndex], 0, 0, w, h);
@@ -100,7 +101,7 @@ export default function CanvasCarousel() {
             layerRef.current?.draw();
             requestAnimationFrame(draw);
         }
-    }, [timeFnType]);
+    }, [timeFnType, displayDuration, transitionDuration]);
 
     useEffect(() => {
         const stage = new Konva.Stage({
@@ -134,17 +135,31 @@ export default function CanvasCarousel() {
             layer.destroy();
             stage.destroy();
         };
-    }, [timeFnType]);
+    }, [timeFnType, displayDuration, transitionDuration]);
     return (
         <div>
             <Typography.Title level={2}>Canvas Carousel</Typography.Title>
             <Space>
+                <Typography.Text>TimeFn</Typography.Text>
                 <Radio.Group style={{ width: '100%' }} onChange={onChange} defaultValue={timeFnType}>
                     <Radio value="linear">linear</Radio>
                     <Radio value="easeInQuad">easeInQuad</Radio>
                     <Radio value="easeOutQuad">easeOutQuad</Radio>
                     <Radio value="easeInOutQuad">easeInOutQuad</Radio>
                 </Radio.Group>
+            </Space>
+            <Divider></Divider>
+            <Space>
+                <Typography.Text>displayDuration</Typography.Text>
+                <InputNumber
+                    name="displayDuration"
+                    value={displayDuration}
+                    onChange={val => setDisplayDuration(val!)}></InputNumber>
+                <Typography.Text>transitionDuration</Typography.Text>
+                <InputNumber
+                    name="transitionDuration"
+                    value={transitionDuration}
+                    onChange={val => setTransitionDuration(val!)}></InputNumber>
             </Space>
             <Divider></Divider>
             <Space>
