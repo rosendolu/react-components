@@ -4,6 +4,7 @@ import CanvasCarousel from '../components/canvas/carousel';
 import CanvasSlide from '../components/canvas/slide';
 import { RouterMenuContext } from '../helpers/context';
 
+const Counter = lazy(() => import('../components/state'));
 const AnimateImg = lazy(() => import('../components/canvas/gif'));
 const VpsComponents = lazy(() => import('../components/vps'));
 const FileComponents = lazy(() => import('../components/file'));
@@ -138,6 +139,16 @@ const routerConfig = [
             {
                 index: true,
                 element: <VpsComponents></VpsComponents>,
+            },
+        ],
+    },
+    {
+        label: 'react state manager',
+        path: '/reactstate',
+        children: [
+            {
+                index: true,
+                element: <Counter></Counter>,
             },
         ],
     },
