@@ -3,9 +3,9 @@ import { useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
 
 export default function Debug() {
-    const listRef = useRef(null);
+    const listRef = useRef<any>(null);
     const [text, setText] = useState('');
-    const [todos, setTodos] = useState(initialTodos);
+    const [todos, setTodos] = useState<any>(initialTodos);
 
     function handleAdd() {
         const newTodo = { id: nextId++, text: text };
@@ -33,7 +33,7 @@ export default function Debug() {
 }
 
 let nextId = 0;
-let initialTodos = [];
+let initialTodos: any[] = [];
 for (let i = 0; i < 20; i++) {
     initialTodos.push({
         id: nextId++,
