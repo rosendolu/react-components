@@ -1,0 +1,34 @@
+{
+    "name": "im",
+    "version": "1.0.0",
+    "main": "./src/index.ts",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC",
+    "description": "",
+    "dependencies": {
+        "@heroicons/react": "^2.1.5",
+        "@tencentcloud/call-uikit-react": "latest",
+        "@tencentcloud/chat": "latest",
+        "@tencentcloud/chat-uikit-engine": "latest",
+        "@tencentcloud/tui-core": "latest",
+        "@tencentcloud/universal-api": "latest",
+        "classnames": "^2.5.1",
+        "date-fns": "^2.29.3",
+        "react-content-loader": "^7.0.2",
+        "react-date-picker": "^9.0.0",
+        "react-dom": "^18.2.0",
+        "react-loader-spinner": "^6.1.6",
+        "rollup-plugin-copy": "^3.5.0"
+    },
+    "peerDependencies": {
+        "date-fns": "^2.29.3",
+        "i18next": "^23.7.11",
+        "react": "^18.2.0",
+        "react-date-picker": "^9.0.0",
+        "react-i18next": "^13.5.0",
+        "tslib": "^2.4.1"
+    }
+}

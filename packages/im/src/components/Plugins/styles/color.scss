@@ -1,0 +1,13 @@
+@use "../../../styles/colors/color-theme" as *;
+
+.plugin-popup {
+  &-box {
+    border-radius: 16px;
+    overflow: hidden;
+
+    @include theme() {
+      background-color: get(dropdown-color-default);
+      box-shadow: 0 0 10px 0 get(shadow-color);
+    }
+  }
+}

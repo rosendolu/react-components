@@ -1,0 +1,40 @@
+/* 按钮的默认样式 */
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    background-color: #4caf50;
+    color: white;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+/* 隐藏 loading 文本 */
+.btn-loading {
+    display: none;
+}
+
+/* 设置 loading 状态 */
+.loading {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.loading .btn-text {
+    visibility: hidden; /* 隐藏提交文字 */
+}
+
+.loading .btn-loading {
+    display: inline-block; /* 显示 loading 文字 */
+}
+
+/* 添加一个简单的动画 */
+.btn-loading {
+    font-size: 16px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

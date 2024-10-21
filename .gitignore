@@ -27,3 +27,4 @@ debug/**
 public/output*
 tsconfig.tsbuildinfo
 public/frame/*
+.local

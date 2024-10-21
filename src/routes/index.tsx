@@ -2,6 +2,7 @@ import { lazy } from 'react';
 import { RouterProvider, createHashRouter } from 'react-router-dom';
 import CanvasCarousel from '../components/canvas/carousel';
 import CanvasSlide from '../components/canvas/slide';
+import IM from '../components/im';
 import { RouterMenuContext } from '../helpers/context';
 
 const Counter = lazy(() => import('../components/state'));
@@ -195,6 +196,16 @@ const routerConfig = [
             {
                 path: 'carousel',
                 element: <CanvasCarousel></CanvasCarousel>,
+            },
+        ],
+    },
+    {
+        label: 'IM',
+        path: '/im',
+        children: [
+            {
+                index: true,
+                element: <IM></IM>,
             },
         ],
     },

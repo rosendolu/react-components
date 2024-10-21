@@ -1,0 +1,22 @@
+@use "../../../styles/colors/color-theme" as *;
+
+.info {
+  @include theme() {
+    background-color: get(bg-color-operate);
+    color: get(text-color-primary);
+  }
+}
+
+.warn {
+  @include theme() {
+    background-color: get(text-color-warning);
+    color: #fff;
+  }
+}
+
+.error {
+  @include theme() {
+    background-color: get(text-color-error);
+    color: #fff;
+  }
+}

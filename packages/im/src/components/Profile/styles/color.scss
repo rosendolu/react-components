@@ -1,0 +1,7 @@
+@use "../../../styles/colors/color-theme" as *;
+
+.tui-profile {
+  @include theme() {
+    background: get(bg-color-operate);
+  }
+}

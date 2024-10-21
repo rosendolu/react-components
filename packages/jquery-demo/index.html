@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>JQuery In Action</title>
+        <link rel="stylesheet" href="./style.css" />
+    </head>
+    <body style="text-align: center">
+        <header>header content</header>
+        <hr />
+        <main>
+            <div class="mainBox" style="height: 100px">main content</div>
+
+            <form id="form">
+                <div>
+                    <label for="username"> username: </label>
+                    <input type="text" placeholder="username" name="username" id="username" />
+                </div>
+                <div style="margin-top: 16px">
+                    <label for="password"> password: </label>
+                    <input type="password" placeholder="password" name="password" id="password" />
+                </div>
+            </form>
+            <button style="margin-top: 16px" class="button" type="submit" id="submitBtn">
+                <span class="btn-text">Submit</span>
+                <span class="btn-loading">Loading...</span>
+            </button>
+
+            <div id="result"></div>
+        </main>
+        <hr />
+
+        <footer>footer</footer>
+        <script src="../../node_modules/jquery/dist/jquery.js"></script>
+        <script src="./index.js"></script>
+    </body>
+</html>
