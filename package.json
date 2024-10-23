@@ -69,6 +69,7 @@
     },
     "workspaces": [
         "packages/im",
-        "packages/jquery-demo"
+        "packages/jquery-demo",
+        "packages/micro_app_html"
     ]
 }
