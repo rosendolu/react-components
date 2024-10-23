@@ -17,6 +17,7 @@ export default function App() {
             <main className="flex h-[80vh] items-stretch justify-start text-center">
                 <section className="flex-1 text-center outline-dashed">
                     <h6 className="">child A</h6>
+                    <p className="react-content">react-content from parent</p>
                     <div id="react"></div>
                 </section>
                 <section className="flex-1 outline-dashed">

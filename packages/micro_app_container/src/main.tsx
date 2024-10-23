@@ -17,18 +17,26 @@ registerMicroApps([
         // entry: '//localhost:5174',
         entry: '//localhost:5174/',
         container: '#react',
-        activeRule: '/react',
+        activeRule: ['#/react'],
     },
     {
         name: 'micro_app_html', // app name registered
         // entry: '//localhost:5174',
         entry: '//localhost:5175/',
         container: '#html',
-        activeRule: '/html',
+        activeRule: l => {
+            console.log('activeRule', l);
+            return l.pathname.startsWith('/html');
+        },
     },
 ]);
 
-start();
+start({
+    excludeAssetFilter: file => {
+        console.log('file', file);
+        return false;
+    },
+});
 
 // 初始化 state
 const actions: MicroAppStateActions = initGlobalState({ count: 0 });

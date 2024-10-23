@@ -20,7 +20,7 @@ let root: any = null;
 function initRoot(container?: string) {
     if (!root) {
         // @ts-ignore
-        root = createRoot(container || document.getElementById('react')!);
+        root = createRoot(container?.querySelector('#root'));
     }
     return root;
 }
