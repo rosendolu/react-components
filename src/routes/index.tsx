@@ -31,8 +31,14 @@ const VideoCropper = lazy(() => import('../components/video-cropper'));
 const VideoPosterCropper = lazy(() => import('../components/videoPosterCropper'));
 const WebAssemblyPage = lazy(() => import('../components/wasm'));
 const Home = lazy(() => import('../pages'));
+const ReactQuery = lazy(() => import('../pages/react-query'));
 
 const routerConfig = [
+    {
+        label: 'ReactQuery',
+        path: '/reactquery',
+        element: <ReactQuery></ReactQuery>,
+    },
     {
         label: 'Home',
         path: '/',

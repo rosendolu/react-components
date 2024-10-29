@@ -17,7 +17,6 @@ import { TUILogin } from '@tencentcloud/tui-core';
 //   import { TUICallKit, TUICallKitServer } from '@tencentcloud/call-uikit-react';
 import { Tabs, Typography } from 'antd';
 import log from 'loglevel';
-import { genTestUserSig } from './.local/GenerateTestUserSig';
 
 const tabbarList = [
     {
