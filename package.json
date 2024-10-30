@@ -72,6 +72,8 @@
     "workspaces": [
         "packages/im",
         "packages/jquery-demo",
-        "packages/micro_app_html"
+        "packages/micro_app_html",
+        "packages/tanstack_router",
+        "packages/tanstack-router"
     ]
 }
