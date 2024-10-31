@@ -10,6 +10,7 @@
     },
     "dependencies": {
         "@ant-design/icons": "^5.3.1",
+        "@changesets/cli": "^2.27.9",
         "@ffmpeg/ffmpeg": "^0.12.10",
         "@ffmpeg/util": "^0.12.1",
         "@fortawesome/fontawesome-svg-core": "^6.4.0",
