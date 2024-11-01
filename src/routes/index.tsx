@@ -3,6 +3,7 @@ import { RouterProvider, createHashRouter } from 'react-router-dom';
 import CanvasCarousel from '../components/canvas/carousel';
 import CanvasSlide from '../components/canvas/slide';
 import IM from '../components/im';
+import XTable from '../components/table';
 import { RouterMenuContext } from '../helpers/context';
 
 const Counter = lazy(() => import('../components/state'));
@@ -43,6 +44,11 @@ const routerConfig = [
         label: 'Home',
         path: '/',
         element: <Home></Home>,
+    },
+    {
+        label: 'XTable',
+        path: '/xtable',
+        element: <XTable></XTable>,
     },
     {
         label: 'File',
