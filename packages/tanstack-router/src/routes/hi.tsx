@@ -7,7 +7,7 @@ export const Route = createFileRoute('/hi')({
 export default function Hi() {
     return (
         <div>
-            <h2>Hi components</h2>
+            <h2>hi.tsx</h2>
         </div>
     );
 }
